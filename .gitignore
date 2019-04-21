@@ -1,0 +1,18 @@
+# SFTP keys
+sftp/*
+
+
+# Ignore binaries, keys and logfiles for Unifi service
+unifi/cert/*
+unifi/data/*
+unifi/logs/*
+
+# Track Unifi's system.properties
+!unifi/data/system.properties
+
+
+# Wiki Github key
+wiki/id_rsa
+
+# Wiki database
+wiki/mongo/*

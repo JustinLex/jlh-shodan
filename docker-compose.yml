@@ -1,0 +1,62 @@
+version: "3"
+services:
+
+  # TODO: needs update to modern version
+  #home-assistant:
+  #  image: homeassistant/home-assistant
+  #  volumes:
+  #    - /services/home-assistant:/config
+  #    - /etc/localtime:/etc/localtime:ro
+  #  network_mode: "host"
+
+  sftp:
+    image: atmoz/sftp
+    ports:
+      - "2222:22"
+    volumes:
+        - /srv/sftp/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key
+        - /srv/sftp/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key
+        - /srv/sftp/id_lappy.pub:/home/files/.ssh/keys/id_lappy.pub:ro
+        - /srv/sftp/id_phone.pub:/home/files/.ssh/keys/id_phone.pub:ro
+        - /mnt/:/home/files
+    command: files::1000
+
+
+  unifi:
+    image: goofball222/unifi
+    network_mode: "host"
+    ports:
+      - "3478:3478/udp"
+      - "6789:6789"
+      - "8080:8080"
+      - "8443:8443"
+      - "8880:8880"
+      - "8843:8843"
+      - "10001:10001/udp"
+    volumes:
+      - /srv/unifi/cert:/usr/lib/unifi/cert
+      - /srv/unifi/data:/usr/lib/unifi/data
+      - /srv/unifi/logs:/usr/lib/unifi/logs
+
+  wikidb:
+    image: mongo
+    expose:
+      - '27017'
+    command: '--smallfiles --bind_ip wikidb'
+    environment:
+      - 'MONGO_LOG_DIR=/dev/null'
+    volumes:
+      - /srv/wiki/mongo:/data/db
+  wikijs:
+    image: 'requarks/wiki:latest'
+    links:
+      - wikidb
+    depends_on:
+      - wikidb
+    ports:
+      - '3000:3000'
+    environment:
+      WIKI_ADMIN_EMAIL: admin@example.com
+    volumes:
+      - /srv/wiki/config.yml:/var/wiki/config.yml
+      - /srv/wiki/id_rsa:/var/wiki/id_rsa
