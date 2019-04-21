@@ -9,6 +9,15 @@ services:
   #    - /etc/localtime:/etc/localtime:ro
   #  network_mode: "host"
 
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+    environment:
+     - NETWORK_ACCESS: internal
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
   sftp:
     image: atmoz/sftp
     ports:
@@ -53,10 +62,10 @@ services:
       - wikidb
     depends_on:
       - wikidb
-    ports:
-      - '3000:3000'
     environment:
-      WIKI_ADMIN_EMAIL: admin@example.com
+      - WIKI_ADMIN_EMAIL: admin@example.com
+      - VIRTUAL_HOST: wiki.jlh.name
+      - VIRTUAL_PORT: 3000
     volumes:
       - /srv/wiki/config.yml:/var/wiki/config.yml
       - /srv/wiki/id_rsa:/var/wiki/id_rsa
