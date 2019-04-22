@@ -13,7 +13,7 @@
                 width: 100%;
                 background-image: url(banner.jpg);
                 background-size: cover;
-                padding-top: 77%; /*hard-coded 1.3 aspect ratio for picture*/
+                padding-top: 43.66%; /*hard-coded 2.29 aspect ratio for picture*/
             }
             header-text {
                 position:absolute;
@@ -22,7 +22,12 @@
                 left: 0;
                 right: 0;
                 text-align: center;
-                padding-top: 51%; /* .77*.66, gives us a lower third in our picture */
+                /*
+                    In order to align the text at the lower third of the banner, we pad a percentage with the following formula:
+                    43.66% (image aspect ratio) * 66% (lower third) - 7%*1.5 (font size / 2 * 1.5x line height defined in Bootstrap)
+                */
+                padding-top: 23.5656%;
+                vertical-align: middle;
                 font-size:7vw;
                 color:#ffffff;
             }
