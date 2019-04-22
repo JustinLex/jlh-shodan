@@ -30,6 +30,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    environment:
+      - 'DEFAULT_HOST=www.jlh.name'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /srv/certs/live/jlh.name/fullchain.pem:/etc/nginx/certs/jlh.name.crt:ro
@@ -78,6 +80,15 @@ services:
       - /srv/unifi/cert:/usr/lib/unifi/cert
       - /srv/unifi/data:/usr/lib/unifi/data
       - /srv/unifi/logs:/usr/lib/unifi/logs
+
+
+  website:
+    image: nginx:alpine
+    environment:
+      - 'VIRTUAL_HOST=www.jlh.name'
+    volumes:
+      - /srv/website/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /srv/website/www:/usr/share/nginx/html:ro
 
 
   wikidb:
