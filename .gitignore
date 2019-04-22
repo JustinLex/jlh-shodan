@@ -1,10 +1,11 @@
-#HTTPS certs
+# HTTPS certs
 certs/*
 letsencrypt/*
 
 
-# SFTP keys
-sftp/*
+# Nextcloud
+nextcloud/*
+nextcloud-db/*
 
 
 # Ignore binaries, keys and logfiles for Unifi service

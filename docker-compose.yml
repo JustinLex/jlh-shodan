@@ -35,17 +35,32 @@ services:
       - /srv/certs/live/jlh.name/fullchain.pem:/etc/nginx/certs/jlh.name.crt:ro
       - /srv/certs/live/jlh.name/privkey.pem:/etc/nginx/certs/jlh.name.key:ro
 
-  sftp:
-    image: atmoz/sftp
-    ports:
-      - "2222:22"
+
+  clouddb:
+    image: mariadb
     volumes:
-        - /srv/sftp/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key
-        - /srv/sftp/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key
-        - /srv/sftp/id_lappy.pub:/home/files/.ssh/keys/id_lappy.pub:ro
-        - /srv/sftp/id_phone.pub:/home/files/.ssh/keys/id_phone.pub:ro
-        - /mnt/:/home/files
-    command: files::1000
+      - /srv/nextcloud-db:/var/lib/mysql
+    environment:
+      - 'MYSQL_RANDOM_ROOT_PASSWORD=true'
+      - 'MYSQL_DATABASE=nextcloud'
+      - 'MYSQL_USER=nextcloud'
+      - 'MYSQL_PASSWORD=nextcloud'
+
+  nextcloud:
+    image: nextcloud:16.0-rc-apache
+    volumes:
+      - /srv/nextcloud:/var/www/html
+      - /mnt/nas:/var/www/html/data
+      - /mnt/media:/mnt/media
+    links:
+      - clouddb
+    environment:
+      - 'MYSQL_DATABASE=nextcloud'
+      - 'MYSQL_USER=nextcloud'
+      - 'MYSQL_PASSWORD=nextcloud'
+      - 'MYSQL_HOST=clouddb:3306'
+      - 'VIRTUAL_HOST=cloud.jlh.name'
+      - 'NETWORK_ACCESS=internal'
 
 
   unifi:
