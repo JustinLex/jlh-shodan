@@ -1,5 +1,5 @@
 title: SHODAN Documentation
-host: 'http://wiki.jlh.name'
+host: 'https://wiki.jlh.name'
 port: 3000
 paths:
   repo: ./repo

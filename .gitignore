@@ -1,3 +1,8 @@
+#HTTPS certs
+certs/*
+letsencrypt/*
+
+
 # SFTP keys
 sftp/*
 
