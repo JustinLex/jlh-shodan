@@ -49,7 +49,7 @@ services:
       - 'MYSQL_PASSWORD=nextcloud'
 
   nextcloud:
-    image: nextcloud:16.0-rc-apache
+    image: nextcloud:16.0-apache
     volumes:
       - /srv/nextcloud:/var/www/html
       - /mnt/nas:/var/www/html/data
