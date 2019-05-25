@@ -62,7 +62,6 @@ services:
       - 'MYSQL_PASSWORD=nextcloud'
       - 'MYSQL_HOST=clouddb:3306'
       - 'VIRTUAL_HOST=cloud.jlh.name'
-      - 'NETWORK_ACCESS=internal'
 
 
   unifi:
