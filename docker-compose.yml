@@ -36,6 +36,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /srv/certs/live/jlh.name/fullchain.pem:/etc/nginx/certs/jlh.name.crt:ro
       - /srv/certs/live/jlh.name/privkey.pem:/etc/nginx/certs/jlh.name.key:ro
+      - /srv/proxy_body_size.conf:/etc/nginx/conf.d/proxy_body_size.conf
 
 
   clouddb:
