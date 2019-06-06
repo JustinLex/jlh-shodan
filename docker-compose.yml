@@ -49,6 +49,9 @@ services:
       - 'MYSQL_USER=nextcloud'
       - 'MYSQL_PASSWORD=nextcloud'
 
+  cloudredis:
+    image: redis:alpine
+
   nextcloud:
     image: nextcloud:16.0-apache
     volumes:
@@ -57,11 +60,15 @@ services:
       - /mnt/media:/mnt/media
     links:
       - clouddb
+      - cloudredis
     environment:
       - 'MYSQL_DATABASE=nextcloud'
       - 'MYSQL_USER=nextcloud'
       - 'MYSQL_PASSWORD=nextcloud'
+
       - 'MYSQL_HOST=clouddb:3306'
+      - 'REDIS_HOST=cloudredis'
+
       - 'VIRTUAL_HOST=cloud.jlh.name'
 
 
