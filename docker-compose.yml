@@ -98,6 +98,20 @@ services:
     env_file:
       - /srv/ovpn.env
 
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    environment:
+      - 'PUID=998'
+      - 'PGID=998'
+      - 'TZ=Europe/Stockholm'
+      - 'VIRTUAL_HOST=jackett.jlh.name'
+      - 'VIRTUAL_PORT=9117'
+      - 'NETWORK_ACCESS=internal'
+    volumes:
+      - /srv/jackett:/config
+      - /mnt/media/downloading/watch:/downloads
+
   radarr:
     image: linuxserver/radarr
     container_name: radarr
