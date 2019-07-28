@@ -11,6 +11,8 @@ nextcloud-db/*
 # Plex
 plex/*
 
+# OpenVPN password
+ovpn.env
 
 # Ignore binaries, keys and logfiles for Unifi service
 unifi/cert/*
