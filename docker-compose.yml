@@ -75,7 +75,6 @@ services:
   plex:
       container_name: plex
       image: plexinc/pms-docker
-      user: plex
       ports:
         - 3005:3005/tcp
         - 8324:8324/tcp
@@ -87,8 +86,10 @@ services:
         - 32414:32414/udp
       environment:
         - TZ=Europe/Stockholm
-        - ADVERTISE_IP=https://plex.jlh.name:80/
-        - 'VIRTUAL_HOST=wiki.jlh.name'
+        - ADVERTISE_IP=https://plex.jlh.name/
+        - PLEX_UID=998
+        - PLEX_GID=998
+        - 'VIRTUAL_HOST=plex.jlh.name'
         - 'VIRTUAL_PORT=32400'
       volumes:
         - /srv/plex:/config

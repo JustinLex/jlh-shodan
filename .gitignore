@@ -8,6 +8,10 @@ nextcloud/*
 nextcloud-db/*
 
 
+# Plex
+plex/*
+
+
 # Ignore binaries, keys and logfiles for Unifi service
 unifi/cert/*
 unifi/data/*
