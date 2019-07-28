@@ -85,12 +85,13 @@ services:
         - 32413:32413/udp
         - 32414:32414/udp
       environment:
-        - TZ=Europe/Stockholm
-        - ADVERTISE_IP=https://plex.jlh.name/
-        - PLEX_UID=998
-        - PLEX_GID=998
+        - 'TZ=Europe/Stockholm'
+        - 'ADVERTISE_IP=https://plex.jlh.name/'
+        - 'PLEX_UID=998'
+        - PLEX_GID=998'
         - 'VIRTUAL_HOST=plex.jlh.name'
         - 'VIRTUAL_PORT=32400'
+      hostname: plex.jlh.name
       volumes:
         - /srv/plex:/config
         - /mnt/media/transcode:/transcode
