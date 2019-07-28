@@ -71,6 +71,7 @@ services:
 
       - 'VIRTUAL_HOST=cloud.jlh.name'
 
+
   transmission:
     image: haugene/transmission-openvpn
     cap_add:
@@ -126,6 +127,22 @@ services:
     volumes:
       - /srv/radarr:/config
       - /mnt/media/plex/Movies:/movies
+      - /mnt/media/downloading:/downloads
+
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - 'PUID=998'
+      - 'PGID=998'
+      - 'TZ=Europe/Stockholm'
+      - 'UMASK_SET=022'
+      - 'VIRTUAL_HOST=sonarr.jlh.name'
+      - 'VIRTUAL_PORT=8989'
+      - 'NETWORK_ACCESS=internal'
+    volumes:
+      - /srv/sonarr:/config
+      - /mnt/media/plex/TV\ Shows:/tv
       - /mnt/media/downloading:/downloads
 
   plex:
