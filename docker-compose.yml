@@ -72,6 +72,30 @@ services:
       - 'VIRTUAL_HOST=cloud.jlh.name'
 
 
+  plex:
+      container_name: plex
+      image: plexinc/pms-docker
+      user: plex
+      ports:
+        - 3005:3005/tcp
+        - 8324:8324/tcp
+        - 32469:32469/tcp
+        - 1900:1900/udp
+        - 32410:32410/udp
+        - 32412:32412/udp
+        - 32413:32413/udp
+        - 32414:32414/udp
+      environment:
+        - TZ=Europe/Stockholm
+        - ADVERTISE_IP=https://plex.jlh.name:80/
+        - 'VIRTUAL_HOST=wiki.jlh.name'
+        - 'VIRTUAL_PORT=32400'
+      volumes:
+        - /srv/plex:/config
+        - /mnt/media/transcode:/transcode
+        - /mnt/media/plex:/data
+
+
   unifi:
     image: goofball222/unifi
     network_mode: "host"
