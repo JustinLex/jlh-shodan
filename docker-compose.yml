@@ -71,6 +71,48 @@ services:
 
       - 'VIRTUAL_HOST=cloud.jlh.name'
 
+  transmission:
+    image: haugene/transmission-openvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /mnt/media/downloading:/data
+    environment:
+      - 'PUID=998'
+      - 'PGID=998'
+      - 'OPENVPN_PROVIDER=PIA'
+      - 'OPENVPN_CONFIG=Sweden'
+      - 'OPENVPN_OPTS=--inactive 3600 --ping 10 --ping-exit 60'
+      - 'TRANSMISSION_SPEED_LIMIT_UP=62500'
+      - 'TRANSMISSION_SPEED_LIMIT_UP_ENABLED=true'
+      - 'LOCAL_NETWORK=10.0.0.0/8'
+      - 'VIRTUAL_HOST=transmission.jlh.name'
+      - 'VIRTUAL_PORT=9091'
+      - 'NETWORK_ACCESS=internal'
+    env_file:
+      - /srv/ovpn.env
+
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    environment:
+      - 'PUID=998'
+      - 'PGID=998'
+      - 'TZ=Europe/Stockholm'
+      - 'UMASK_SET=022'
+      - 'VIRTUAL_HOST=radarr.jlh.name'
+      - 'VIRTUAL_PORT=7878'
+      - 'NETWORK_ACCESS=internal'
+    volumes:
+      - /srv/radarr:/config
+      - /mnt/media/plex/Movies:/movies
+      - /mnt/media/downloading:/downloads
 
   plex:
       container_name: plex
